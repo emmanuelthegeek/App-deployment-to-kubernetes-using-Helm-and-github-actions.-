@@ -1,0 +1,22 @@
+name: PRCleanup
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  deployment:
+    runs-on: 'ubuntu-latest'
+    steps:
+    - name: 'Deploy'
+      uses: 'emmanuelthegeek/Simple-REST-API-in-Django.'
+      with:
+        # Task remove means to remove the helm release.
+        task: 'remove'
+        release: 'review-Simple-REST-API-in-Django.-${{ github.event.pull_request.number }}'
+        version: '${{ github.sha }}'
+        track: 'stable'
+        chart: 'app'
+        namespace: 'example-helm'
+        token: '${{ github.token }}'
+      env:
+        KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'

@@ -1,0 +1,16 @@
+name: 'Deploy'
+on: ['deployment']
+
+jobs:
+  deployment:
+    runs-on: 'ubuntu-latest'
+    steps:
+    - name: 'Deploy'
+      uses: 'emmanuelthegeek/Simple-REST-API-in-Django.'
+      with:
+        token: '${{ github token to access github APIs }}'
+        secrets: '${{ toJSON(secrets) }}'
+        version: '${{ github.sha }}'
+        chart: 'app'
+      env:
+        KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'

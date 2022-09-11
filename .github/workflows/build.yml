@@ -1,0 +1,12 @@
+name: 'Push'
+on: ['push']
+
+jobs:
+  build:
+    runs-on: 'ubuntu-latest'
+
+    steps:
+    - uses: 'emmanuelthegeek/Simple-REST-API-in-Django.'
+
+    - name: 'Test'
+      run: 'echo "Awesome"'
