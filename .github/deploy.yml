@@ -1,0 +1,55 @@
+canary:
+  production_environment: true
+  required_contexts: ["build"]
+  environment: production
+  description: 'Canary'
+  payload:
+    value_files: ["./config/production.yml", "./config/_common.yml"]
+    release: production-Simple-REST-API-in-Django. 
+    namespace: example-helm
+    track: canary
+    values:
+      replicaCount: 1
+
+production:
+  production_environment: true
+  required_contexts: ["build"]
+  environment: production
+  description: 'Production'
+  payload:
+    value_files: ["./config/production.yml", "./config/_common.yml"]
+    remove_canary: true
+    release: production-Simple-REST-API-in-Django.
+    namespace: example-helm
+    track: stable
+    values:
+      replicaCount: 5
+
+
+staging:
+  auto_deploy_on: refs/heads/master
+  required_contexts: ["build"]
+  environment: staging
+  description: 'Staging'
+  payload:
+    value_files: ["./config/staging.yml", "./config/_common.yml"]
+    release: staging-Simple-REST-API-in-Django.
+    namespace: example-helm
+    track: stable
+    values:
+      replicaCount: 1
+
+review:
+  transient_environment: true
+  production_environment: false
+  required_contexts: ["build"]
+
+  environment: pr${{ pr }}
+  description: 'Review'
+  payload:
+    value_files: ["./config/review.yml", "./config/_common.yml"]
+    release: review-Simple-REST-API-in-Django.-${{ pr }}
+    namespace: example-helm
+    track: stable
+    values:
+      replicaCount: 1
