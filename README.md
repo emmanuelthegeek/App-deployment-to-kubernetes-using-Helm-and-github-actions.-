@@ -2,3 +2,4 @@
 Deploying to kubernetes with helm (package manager for kubernetes), and github actions. 
 Special thanks to Colin Walker
 https://medium.com/@colinjfw
+https://github.com/colinjfw
